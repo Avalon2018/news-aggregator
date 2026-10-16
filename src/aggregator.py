@@ -4,7 +4,7 @@ Polls feeds, stores new items in SQLite, prints latest headlines.
 """
 
 import sqlite3
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 import feedparser
@@ -46,7 +46,7 @@ def fetch_feed(url: str) -> feedparser.FeedParserDict:
 def store_new_items(conn: sqlite3.Connection, source_name: str, parsed):
     """Insert items that are not already in the database. Return count of new items."""
     new_count = 0
-    now = datetime.utcnow().isoformat()
+    now = datetime.now(timezone.utc).isoformat()
 
     for entry in parsed.entries:
         guid = entry.get("id") or entry.get("link") or entry.get("title")
