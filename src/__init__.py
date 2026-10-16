@@ -1,0 +1,1 @@
+"""Local news aggregator package."""
